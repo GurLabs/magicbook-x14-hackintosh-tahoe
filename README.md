@@ -36,23 +36,32 @@ This repository contains the OpenCore EFI configuration required to run macOS Ta
 
 ---
 
-## ⚙️ BIOS Settings & Recommendations
+## ⚙️ BIOS Settings
 
 Before proceeding with the installation, you **must** configure your BIOS settings properly to avoid kernel panics.
 
-### Required Changes:
 * **Secure Boot:** `Disabled`
 * **SATA Mode:** `AHCI`
 
-### 💡 Pre-Installation Optimization Hint:
-To ensure a smooth installation process and minimize the risk of installation loops, it is highly recommended to **disable the Wi-Fi and Bluetooth modules in your BIOS** (if your BIOS allows it) or avoid connecting to any network during the initial macOS setup phases. You can safely turn them back on or connect once you reach the macOS desktop.
+---
+
+## 🔧 Essential Tools (Highly Recommended)
+
+To manage, update, or customize this EFI, using these specific tools is strongly advised:
+1. **OCAuxiliaryTools (OCAT):** The absolute best tool for keeping OpenCore, Kexts, and your `config.plist` up to date without breaking the structure.
+2. **USBMap / USBMapper:** Essential for maintaining clean USB port mapping, ensuring better battery life, and preventing sleep issues on your specific laptop layout.
 
 ---
 
-## 🚀 Installation Steps
+## 🚀 Installation Steps & Pre-Installation Hint
 
+### 💡 Pre-Installation Optimization (Crucial)
+To prevent installation loops and ensure a smooth setup process, **it is highly recommended to temporarily disable the Wi-Fi and Bluetooth kexts in the EFI (`config.plist`) before booting the installer.** Do not connect to any network during the initial macOS setup phases. Once you reach the desktop successfully, you can re-enable them.
+
+### Step-by-Step:
 1. **Prepare the USB installer:** Create a vanilla macOS Tahoe bootable USB drive.
 2. **Clone the EFI:** Download this repository, rename the folder to `EFI` and place it into the root of your USB drive's EFI partition.
-3. **Configure GenSMBIOS:** Generate a unique serial number, Board Serial, and SmUUID using `MacBookPro16,4` or appropriate Comet Lake SMBIOS. Inject these into the `config.plist`.
-4. **Boot:** Plug the USB into your MagicBook X14, boot into the boot manager, select the OpenCore drive, and start the installation.
+3. **Disable Networking Kexts:** Use OCAuxiliaryTools to open `config.plist`, go to the Kernel section, and temporarily disable the Intel Wi-Fi and Bluetooth kexts for the first install.
+4. **Configure GenSMBIOS:** Generate a unique serial number, Board Serial, and SmUUID using `MacBookPro16,4` (Comet Lake) SMBIOS profile. Inject these into the `config.plist`.
+5. **Boot:** Plug the USB into your MagicBook X14, boot into the boot manager, select the OpenCore drive, and start the installation.
    * *Reminder: Remember that you might face a 2-3 minute black screen on boots. Do not force shutdown your laptop.*
